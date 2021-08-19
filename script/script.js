@@ -1,5 +1,7 @@
 document.getElementById("calculate").addEventListener("submit",calculateHandler=(event)=>{
     event.preventDefault();
+
+    // Getting all the values from the form
     var uname = event.target.uname.value;
     var email = event.target.email.value;
     var gender = event.target.gender.value;
@@ -9,13 +11,18 @@ document.getElementById("calculate").addEventListener("submit",calculateHandler=
     var cpp = 3166.45;
     var ei = 889.54;
     var totalDeductions;
+
+    // checking if they contain null value
     nullValidation(uname, "uname");
     nullValidation(email, "email");
     nullValidation(gender, "gender");
     nullValidation(dependents, "dependents");
     nullValidation(grossPay, "grossPay");
+
+    //checking for email format
     emailVal(email);
 
+    // checking if the field are not null 
     if (nullValidation(uname, "uname") && nullValidation(email, "email") &&
         nullValidation(gender, "gender") && nullValidation(dependents, "dependents")
         && nullValidation(grossPay, "grossPay")&& emailVal(email)) {
@@ -25,24 +32,27 @@ document.getElementById("calculate").addEventListener("submit",calculateHandler=
             var dependentBenefit = dependentsCal(dependents);
             var totalDeductions = Number(fedTax)+Number(provTax)+cpp+ei;
             var netPay = Number(grossPay)-Number(totalDeductions)+Number(dependentBenefit);
+
+    // Displaying calculated values into the html page using DOM
             document.getElementById("fedTax").innerText = "$"+fedTax;
             document.getElementById("provTax").innerText = "$"+provTax;
             document.getElementById("cpp").innerText = "$"+cpp;
             document.getElementById("ei").innerText = "$"+ei;
             document.getElementById("totalDeductions").innerText = "$"+totalDeductions;
             document.getElementById("netPay").innerText = "$"+netPay;
-            
+         
+    // Jquey to show the final result section         
             $(document).ready(function(){
                 $("#result").show();
             });
-
+    
+    // Calculating the percentage of  all the values for displaying on piechart
             var fedTaxPie = (fedTax/grossPay)*100;
             var provTaxPie = (provTax/grossPay)*100;
             var cppPie = (cpp/grossPay)*100;
             var eiPie = (ei/grossPay)*100;
             var netPayPie =(netPay/grossPay)*100;
-            var name =["Fed Tax", "Prov Tax", "CPP", "EI" , "Net Pay"];
-            
+            var name =["Fed Tax", "Prov Tax", "CPP", "EI" , "Net Pay"];     
             var data = [fedTaxPie, provTaxPie,cppPie, eiPie,netPayPie];
             var colors= ["darkgoldenrod", "bisque","darkseagreen", "maroon","#f5e97fc0"];
             var canvas = document.getElementById("piechart");
@@ -51,6 +61,8 @@ document.getElementById("calculate").addEventListener("submit",calculateHandler=
             var y= 100;
             var radius = 100;
             var starting =0;
+
+        //Making piechart using canvas tag and properties
             for(var i=0; i<data.length; i++) {
                 var end = starting + (2 /100 *data[i]); 
                 context.beginPath();
@@ -60,20 +72,18 @@ document.getElementById("calculate").addEventListener("submit",calculateHandler=
                 context.fill();
                 starting= end;
 
+        //Making rectangular colored labels for piechart 
                 context.rect (220, 25 * i, 15 , 15);
                 context.fill();
                 context.fillStyle= "cornsilk";
-                context.fillText( name [i]  , 245, 25 * i +15);
-                
-            }
-                    
-            
+                context.fillText( name [i]  , 245, 25 * i +15);              
+            }        
     } else{
         alert ("ALL FIELDS MANDATORY");
-    }
-    // event.target.reset();  
+    }  
 })
 
+//  function to check if any input field is empty
 function nullValidation(value, id){
     if (value == ""){
         document.getElementById(id).classList.add("bg-danger");
@@ -83,6 +93,8 @@ function nullValidation(value, id){
         return true;
     } 
 }
+
+// function to check the proper email format
 function emailVal(email){
     let pattern = ("^([a-z A-Z 0-9]+)@([a-z A-Z 0-9]+)\\.([a-z A-Z]{2,5})$");
     if(!email.match(pattern)) {
@@ -97,10 +109,12 @@ function emailVal(email){
     }
 }
 
+// Jquey to hide the final result section till all form fields are filled
 $(document).ready(function(){
     $("#result").hide();    
 });
 
+// function to calculate the dependents benefit 
 function dependentsCal(dependents){
     var benefit;
     if(dependents == "one"){
@@ -118,6 +132,7 @@ function dependentsCal(dependents){
     return benefit;
 }
 
+//function to calculate the Tax taking into account gender and dependents
 function taxCal(grossPay, gender,dependents){
     var cpp = 3166.45;
     var ei = 889.54; 
@@ -165,7 +180,6 @@ function taxCal(grossPay, gender,dependents){
             fedTax = taxableAmt*33/100;
         }
         provTax = taxableAmt*13/100;
-    }  
-    
+    }   
     return [fedTax.toFixed(2), provTax.toFixed(2)];
 }
