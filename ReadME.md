@@ -1,1 +1,1 @@
-This project uses HTML, CSS, JAVASCRIPT, BOOTSTRAP, JQUERY to calculate the new income of a person after deductions.
+This project uses HTML, CSS, JAVASCRIPT, BOOTSTRAP, JQUERY to calculate the net income of a person after deductions.
