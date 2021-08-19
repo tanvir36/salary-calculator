@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SALARY CALCULATION</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="./css/salary.css">
+</head>
+<body>
+    <section class="info">
+        <div class="container info__container">
+            <h1 class="heading">SALARY CALCULATOR</h1>
+            <form id="calculate" autocomplete="off"  onsubmit="calculateHandler" class="info__container-form">
+                <div class="img-container"></div>
+                <label for="uname">Name</label> 
+                <div class="input-group input-container">
+                    <span class="input-group-addon icon"> <i class="glyphicon glyphicon-user"></i></span>
+                    <input  type="text" class="input-lg" name="name" id="uname" data-toggle="tooltip" autocomplete="off" title="Enter your name" data-placement="bottom" />                  
+                </div>                                                                       
+                <label for="email">Email</label>
+                <div class="input-group input-container">
+                    <span class="input-group-addon icon"> <i class="glyphicon glyphicon-envelope"></i></span>
+                    <input type="email" class="input-lg" autocomplete="off" name="email" id="email" data-toggle="tooltip" title="Enter your email" data-placement="bottom"/>
+                    <span  class="label label-default " id="message"></span>
+                </div>                
+                <div id="gender" class="input-container">
+                    <input type="radio" class="input-sm" name="gender"  value="female" id="gender"/>
+                    <label>Female</label>
+                    <input type="radio" class="input-sm" name="gender"  value="male"/>
+                    <label>Male</label> 
+                </div>   
+                <label>Dependents</label>
+                <div>
+                    <select class="input-lg input-container " name = "dependents" id="dependents">
+                        <option value="">SELECT</option>
+                        <option value="one">ONE</option>
+                        <option value="two">TWO</option>
+                        <option value="three">THREE</option>
+                        <option value ="other">OTHER</option>
+                    </select>
+                </div>               
+                <label for="amt">Gross Pay (Yearly)</label>
+                <div class="input-group input-container">
+                    <span class="input-group-addon icon"><i class="glyphicon glyphicon-usd"></i></span>
+                    <input type="number" class="input-lg" id="grossPay" data-toggle="tooltip" title="Enter your Gross pay in dollars" data-placement="bottom" />
+                </div>               
+                <button class="btn btn-lg calculate" id="calculate" type="submit">CALCULATE</button>
+            </form>
+        </div>
+        <div id="result" class="container">            
+            <div class="result-card">
+                <h1 class="heading">FINAL RESULT</h1>
+                <h4>
+                    Federal Tax Deductions~~~~~~~~~~~~~~ 
+                    <span  id="fedTax"></span>
+                </h4>                
+                <h4>
+                    Provincial Tax Deductions~~~~~~~~~~~~~~
+                    <span id="provTax"></span> 
+                </h4>                 
+                <h4>
+                    CPP ~~~~~~~~~~~~~~
+                    <span id="cpp"></span>
+                </h4>
+                <h4>
+                    EI ~~~~~~~~~~~~~~
+                    <span id="ei"></span>
+                </h4>  
+                <h4>
+                    Total Deductions ~~~~~~~~~~~~~~
+                    <span  id="totalDeductions"></span>
+                </h4>
+               
+                <h4 class="bg-danger"> 
+                    Net Pay ~~~~~~~~~~~~~~
+                    <span id ="netPay"></span>
+                </h4>       
+            </div>
+        </div>
+    </section>
+    <script src="./script/script.js"></script>
+</body>
+</html>
