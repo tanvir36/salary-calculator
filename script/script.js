@@ -31,10 +31,43 @@ document.getElementById("calculate").addEventListener("submit",calculateHandler=
             document.getElementById("ei").innerText = "$"+ei;
             document.getElementById("totalDeductions").innerText = "$"+totalDeductions;
             document.getElementById("netPay").innerText = "$"+netPay;
-
+            
             $(document).ready(function(){
                 $("#result").show();
             });
+
+            var fedTaxPie = (fedTax/grossPay)*100;
+            var provTaxPie = (provTax/grossPay)*100;
+            var cppPie = (cpp/grossPay)*100;
+            var eiPie = (ei/grossPay)*100;
+            var netPayPie =(netPay/grossPay)*100;
+            var name =["Fed Tax", "Prov Tax", "CPP", "EI" , "Net Pay"];
+            
+            var data = [fedTaxPie, provTaxPie,cppPie, eiPie,netPayPie];
+            var colors= ["darkgoldenrod", "bisque","darkseagreen", "maroon","#f5e97fc0"];
+            var canvas = document.getElementById("piechart");
+            var context = canvas.getContext("2d");
+            var x= 100;
+            var y= 100;
+            var radius = 100;
+            var starting =0;
+            for(var i=0; i<data.length; i++) {
+                var end = starting + (2 /100 *data[i]); 
+                context.beginPath();
+                context.fillStyle = colors[i];
+                context.moveTo( x,y);
+                context.arc(x,y,50,starting*Math.PI,end*Math.PI);
+                context.fill();
+                starting= end;
+
+                context.rect (220, 25 * i, 15 , 15);
+                context.fill();
+                context.fillStyle= "cornsilk";
+                context.fillText( name [i]  , 245, 25 * i +15);
+                
+            }
+                    
+            
     } else{
         alert ("ALL FIELDS MANDATORY");
     }
